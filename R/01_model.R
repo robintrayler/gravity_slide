@@ -96,7 +96,7 @@ thetas <- thetas %>%
   pivot_longer(cols = unique(data$layer),
                names_to = 'layer', 
                values_to = 'age') %>% 
-  right_join(data %>% select(layer, rank), 
+  right_join(data %>% select(layer, rank) %>% distinct(), 
              by = 'layer')
   
 # save the results
