@@ -99,6 +99,6 @@ thetas <- thetas %>%
   right_join(data %>% select(layer, rank), 
              by = 'layer')
   
-# save the results 
-# write_csv(x = thetas,
-#           file = './data/model_age.csv')
+# save the results
+write_csv(x = thetas,
+          file = './data/model_age.csv')
