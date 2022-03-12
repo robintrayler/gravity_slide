@@ -1,13 +1,9 @@
+# load required packages
 library(tidyverse)
-library(ggridges)
-source('./R/adaptive_update.R')
-source('./R/truncated_random_normal.R')
-source('./R/truncated_standard_normal.R')
-source('./R/calc_complex_prob.R')
-
+source('./R/00_required_functions.R')
 
 # load the data ---------------------------------------------------------------
-data <- read_csv(file = './data/slide_geochron.csv') %>% 
+data <- read_csv(file = './data/geochronology.csv') %>% 
   mutate(age_sd = `2_sd` / 2) %>% 
   select(position,
          layer,
@@ -19,13 +15,17 @@ data <- read_csv(file = './data/slide_geochron.csv') %>%
 # Set up the model ------------------------------------------------------------
 iterations <- 100000
 burn = iterations / 10
+
+# order the geochronology by rank
 o <- order(data$rank)
 data   <- data[o, ]
+
+# set up some model storage
 rank   <- unique(data$rank)
 thetas <- matrix(nrow = iterations, ncol = length(rank))
 LL     <- matrix(nrow = iterations, ncol = length(rank))
 
-# pick starting values they don't need to be very accurate 
+# pick starting values. they don't need to be very accurate 
 for(i in seq_along(rank)) {
   thetas[1, i] <- truncated_random_normal(mean = mean(data$age[data$rank == rank[i]]),
                                           sd = mean(data$age_sd[data$rank == rank[i]]),
@@ -47,6 +47,7 @@ for(j in 2:iterations) {
   
   # update the thetas
   for(i in seq_along(rank)) {
+    # use the adaptive MCMC sampler
     theta_proposed <- adaptive_update(chain = thetas[, i],
                                       i = j,
                                       start_index = burn / 2,
@@ -87,7 +88,7 @@ for(j in 2:iterations) {
   thetas[j, ] <- current_theta
 }
 
-# aggregate the data into a data frame and remove the burn-in
+# aggregate the data into a data frame
 thetas <- thetas %>% 
   as.data.frame() %>% 
   set_names(nm = unique(data$layer)) %>% 
@@ -99,5 +100,5 @@ thetas <- thetas %>%
              by = 'layer')
   
 # save the results 
-write_csv(x = thetas,
-          file = './data/model_age.csv')
+# write_csv(x = thetas,
+#           file = './data/model_age.csv')

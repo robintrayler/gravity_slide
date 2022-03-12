@@ -1,15 +1,15 @@
 library(tidyverse)
-library(ggridges)
-
-# model output data
+# model read in the model data
 data <- read_csv(file = './data/model_age.csv') %>% 
   mutate(layer = fct_reorder(layer, rank, .desc = TRUE))
 
-# data pdfs
+# read in the likelihood densities for plotting 
+
 ridges <- read_csv(file = './data/likelihood_density.csv') %>% 
   mutate(layer = fct_reorder(layer, rank, .desc = TRUE))
 ridges$probability[ridges$probability < 1e-12] = NA
 
+# make a data frame of labels
 labels <- 
   tribble(~layer,           ~age,  ~y, ~rank, 
           'Haycock',         23.15, 15,  4,
@@ -20,12 +20,10 @@ labels <-
                              rank, 
                              .desc = TRUE))
 
-# histograms of model posterior
+# plot the model posterior
 figure <- data %>% 
   ggplot(mapping = aes(x = age, 
                        fill = layer)) + 
-  # geom_histogram(binwidth = 0.01,
-  #                aes(y = ..density..)) +
   facet_grid(layer ~ ., 
              scales = 'free_y') + 
   theme_bw() + 
@@ -56,9 +54,14 @@ figure <- data %>%
                           color = layer),
             alpha = 1)
 
-pdf(file = 'figure.pdf',
-    width = 4, 
-    height = 2.5)
-figure
-dev.off()
+# Calculate summary statistics ------------------------------------------------
+summary_stats <- data %>% 
+  group_by(layer) %>% 
+  summarise(median = quantile(age, 0.5) %>% round(3), 
+            low = quantile(age, 0.025),
+            high = quantile(age, 0.975),
+            rank = unique(rank)) %>% 
+  mutate(minus = median - low %>% round(2),
+         plus = high - median %>% round(2)) 
+
 
