@@ -78,7 +78,7 @@ for(j in 2:iterations) {
     # accept or reject using an metropolis-hastings algorithm
     if(!is.na(p)) {
       if(!is.infinite(p)) {
-        if(exp(p) > runif(1)) {
+        if(exp(p) > runif(1, min = 0, max = 1)) {
           current_theta[i] <- theta_proposed
         }
       }

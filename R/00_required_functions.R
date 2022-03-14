@@ -1,5 +1,5 @@
-#' This function is a simple implementation of the adaptive MCMC algorithm of
-#' Haario et al. (2001)
+# This function is a simple implementation of the adaptive MCMC algorithm of
+# Haario et al. (2001)
 
 adaptive_update <- function(chain,
                             i,
@@ -46,7 +46,7 @@ truncated_random_normal <- function(mean,
   return(newvalue)
 }
 
-
+# truncated normal functions --------------------------------------------------
 truncated_standard_normal <- function(a, b){
   # this function draws a random number from a normal distribution centered at
   # 0 with a mean of 1, with truncations at a and b.
@@ -73,7 +73,6 @@ truncated_standard_normal <- function(a, b){
   }
   return(x)
 }
-
 
 # sum probability distributions ---------------------------------------------------------
 calc_complex_prob <- function(x, ages, age_sd) {
