@@ -75,6 +75,12 @@ figure <- data %>%
                           color = layer),
             alpha = 1)
 
+pdf(file = './results/figure.pdf',
+    width = 6.5,
+    height = 3.5)
+figure
+dev.off()
+
 # Calculate summary statistics ------------------------------------------------
 summary_stats <- data %>% 
   group_by(layer) %>% 
@@ -86,4 +92,4 @@ summary_stats <- data %>%
          plus = high - median %>% round(3)) 
 
 summary_stats %>% 
-  write_csv(file = 'results_summary.csv')
+  write_csv(file = './results/results_summary.csv')
