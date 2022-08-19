@@ -102,3 +102,4 @@ thetas <- thetas %>%
 # save the results
 write_csv(x = thetas,
           file = './data/model_age.csv')
+

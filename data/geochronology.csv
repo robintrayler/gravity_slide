@@ -1,9 +1,7 @@
 ﻿position,rank,unit,layer,age,2_sd
-above slide,4,Haycock Mountain Tuff,Haycock,22.838,0.043
-within slide,3,pseudotachylyte,pseudotachylyte,22.99,0.82
-within slide,2,andesite blocks,andesite,22.99,0.42
-within slide,2,andesite blocks,andesite,23.02,0.42
-below slide,1,Panguitch basal,basal layers,22.91,0.17
-below slide,1,Haycock basal,basal layers,23.28,0.13
-below slide,1,Haycock injectites,basal layers,23.73,0.27
-below slide,1,Bear Valley,basal layers,23.52,0.11
+above slide,3,Haycock Mountain Tuff,Haycock,22.838,0.043
+within slide,2,pseudotachylyte,pseudotachylyte,22.99,0.82
+below slide,1,Panguitch basal,basal layers,22.57,0.22
+below slide,1,Haycock basal,basal layers,22.58,0.47
+below slide,1,Haycock injectites,basal layers,23.53,0.28
+below slide,1,Bear Valley,basal layers,23.18,0.23
