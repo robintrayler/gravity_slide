@@ -1,9 +1,15 @@
 library(tidyverse)
+source('./R/00_required_functions.R')
+
 # model read in the model data
-data <- read_csv(file = './data/model_age.csv') %>% 
-  mutate(layer = fct_reorder(layer, rank, .desc = TRUE))
+data <- read_csv(file = './results/model_age.csv') %>% 
+  mutate(layer = fct_reorder(layer, 
+                             rank, 
+                             .desc = TRUE))
 geochron <- read_csv(file = './data/geochronology.csv')
-# read in the likelihood densities for plotting 
+
+
+# make likelihood PDS's for plotting
 
 layer <- unique(geochron$layer)
 x <- seq(22, 24.25, length = 1000)
@@ -17,19 +23,14 @@ for(i in seq_along(layer)) {
                             layer = layer[i])
 }
 
-
-  
- ridges <- ridges %>% 
-   reduce(rbind) %>% 
- mutate(layer = factor(layer, levels = c('Haycock', 'pseudotachylyte', 'basal layers')))
- 
- ridges$probability[ridges$probability < 1e-12] = NA
-   
-
-
-# ridges <- read_csv(file = './data/likelihood_density.csv') %>% 
-#   mutate(layer = fct_reorder(layer, rank, .desc = TRUE))
-# ridges$probability[ridges$probability < 1e-12] = NA
+ridges <- ridges %>% 
+  reduce(rbind) %>% 
+  mutate(layer = factor(layer, 
+                        levels = c('Haycock', 
+                                   'pseudotachylyte', 
+                                   'basal layers')))
+# drop really low probabilties
+ridges$probability[ridges$probability < 1e-12] = NA
 
 # make a data frame of labels
 labels <- 
@@ -62,7 +63,6 @@ figure <- data %>%
             mapping = aes(x = age,
                           y = probability * 1),
             inherit.aes = FALSE,
-            # size = 1,
             alpha = 0.75) +
   geom_density(color = NA,
                alpha = 0.75) +
