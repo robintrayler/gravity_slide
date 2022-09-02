@@ -1,5 +1,4 @@
 library(tidyverse)
-library(cowplot)
 source('./R/00_required_functions.R')
 
 # model read in the model data
