@@ -1,5 +1,6 @@
-#  Markagunt Gravity Slide
-This repository contains the age-modeling code for Holliday et al. (202X) - *Emplacement age of the Markagunt Gravity Slide in Southwestern Utah, USA*
+# Readme
+This repository contains the age-modeling code for: 
+* Holliday M. E., Rivera, T., Jicha, B., Trayler, R. B., Biek R. F., Braunagel, M. J., Griffith, W. A., Hacker, D. B., Malone, D. H., Mayback, D. F. (2022), *Emplacement age of the Markagunt Gravity Slide in Southwestern Utah, USA*, [Terra Nova](https://onlinelibrary.wiley.com/doi/10.1111/ter.12630)
 
 The repository is structured into two directories. 
 ```
